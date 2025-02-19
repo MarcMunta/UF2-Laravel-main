@@ -46,5 +46,13 @@
         "country": "España",
         "duration": "199",
         "img_url": "https://pics.filmaffinity.com/fight_club-320750671-mmed.jpg"
+    },
+    {
+        "name": "Titanic",
+        "year": "1997",
+        "genre": "Amor",
+        "country": "Estados Únidos",
+        "duration": "194",
+        "img_url": "https://m.media-amazon.com/images/I/91zGp74Qc4L.jpg"
     }
 ]
