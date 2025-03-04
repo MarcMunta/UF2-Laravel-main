@@ -13,7 +13,7 @@ class FilmFakerSeeder extends Seeder {
             DB::table('films')->insert([
                 'name' => $faker->sentence(3),
                 'year' => $faker->year(),
-                'genre' => $faker->word(),
+                'genre' => $faker->randomElement(['Terror', 'Humor', 'Accion', 'Suspense']),
                 'country' => substr($faker->country(), 0, 30),
                 'duration' => $faker->numberBetween(80, 180),
                 'img_url' => $faker->imageUrl(200, 300, 'movies'),
