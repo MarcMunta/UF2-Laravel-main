@@ -54,5 +54,13 @@
         "country": "Estados Únidos",
         "duration": "194",
         "img_url": "https://m.media-amazon.com/images/I/91zGp74Qc4L.jpg"
+    },
+    {
+        "name": "Marc Muntané",
+        "year": "2005",
+        "genre": "Dramatico",
+        "country": "Española",
+        "duration": "200",
+        "img_url": "https://m.media-amazon.com/images/I/91zGp74Qc4L.jpg"
     }
 ]
