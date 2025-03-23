@@ -11,7 +11,7 @@ class FilmFakerSeeder extends Seeder {
         $faker = Faker::create();
         foreach (range(1,10) as $index) {
             DB::table('films')->insert([
-                'name' => $faker->sentence(3),
+                'title' => $faker->sentence(3),
                 'year' => $faker->year(),
                 'genre' => $faker->randomElement(['Terror', 'Humor', 'Accion', 'Suspense']),
                 'country' => substr($faker->country(), 0, 30),

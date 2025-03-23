@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FilmController extends Controller
 {
@@ -13,8 +14,15 @@ class FilmController extends Controller
      */
     public static function readFilms(): array
     {
-        $films = Storage::json('/public/films.json');
-        return $films;
+        $sqlFilms = DB::table('films')->get()->map(function ($film) {
+            return (array) $film;
+        })->toArray();
+
+        $jsonFilms = Storage::exists('public/films.json')
+            ? Storage::json('public/films.json')
+            : [];
+
+        return array_merge($sqlFilms, $jsonFilms);
     }
     /**
      * List films older than input year 
@@ -169,9 +177,7 @@ class FilmController extends Controller
 
     public function createFilm(Request $request)
     {
-        $source = $request->input('source', 'sql');
-
-        if ($source === 'json') {
+        if (env("tipo") === 'json') {
             $jsonPath = storage_path('app/public/films.json');
             $films = [];
 

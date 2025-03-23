@@ -1,6 +1,6 @@
 [
     {
-        "name": "La Rosa Púrpura del Cairo",
+        "title": "La Rosa Púrpura del Cairo",
         "year": 1985,
         "genre": "Drama",
         "country": "Hospitalet",
@@ -8,7 +8,7 @@
         "img_url": "https://es.web.img2.acsta.net/medias/nmedia/18/79/45/34/20253823.jpg"
     },
     {
-        "name": "El Club de los Cinco",
+        "title": "El Club de los Cinco",
         "year": 1985,
         "genre": "Comedia",
         "country": "Hospitalet",
@@ -16,7 +16,7 @@
         "img_url": "https://pics.filmaffinity.com/El_club_de_los_cinco-192309838-large.jpg"
     },
     {
-        "name": "Forrest Gump",
+        "title": "Forrest Gump",
         "year": 1994,
         "genre": "Drama",
         "country": "Hospitalet",
@@ -24,7 +24,7 @@
         "img_url": "https://pics.filmaffinity.com/Forrest_Gump-212765827-large.jpg"
     },
     {
-        "name": "Arrival",
+        "title": "Arrival",
         "year": 2016,
         "genre": "Ciencia Ficción",
         "country": "Hospitalet",
@@ -32,7 +32,7 @@
         "img_url": "https://pics.filmaffinity.com/La_llegada-686966912-large.jpg"
     },
     {
-        "name": "As Bestas",
+        "title": "As Bestas",
         "year": 2022,
         "genre": "Drama",
         "country": "Hospitalet",
@@ -40,7 +40,7 @@
         "img_url": "https://pics.filmaffinity.com/As_bestas-275688233-large.jpg"
     },
     {
-        "name": "Fight Club",
+        "title": "Fight Club",
         "year": "1999",
         "genre": "Action",
         "country": "España",
