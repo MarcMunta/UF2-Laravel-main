@@ -63,7 +63,28 @@
         </div>
     </div>
 
-    @include('master.footer')
+    <div class="actors-section">
+<h2>Actores</h2>
+<ul>
+    <li><a href="{{ route('listactors') }}">Listar Actores</a></li>
+    <li>
+        <form method="GET" action="{{ route('listByDecade', ['year' => '']) }}">
+            <label for="decade">Seleccionar década:</label>
+            <select name="year" onchange="this.form.action='{{ route('listByDecade', ['year' => '']) }}'.replace('%7Byear%7D', this.value); this.form.submit();">
+                <option disabled selected>Elegir década</option>
+                <option value="1980-1989">1980</option>
+                <option value="1990-1999">1990</option>
+                <option value="2000-2009">2000</option>
+                <option value="2010-2019">2010</option>
+                <option value="2020-2029">2020</option>
+            </select>
+        </form>
+    </li>
+    <li><a href="{{ route('contactors') }}">Contar Actores</a></li>
+</ul>
+</div>
+
+@include('master.footer')
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -72,3 +93,7 @@
 </body>
 
 </html>
+
+<hr>
+
+<hr>

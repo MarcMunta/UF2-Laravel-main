@@ -1,0 +1,33 @@
+.actors-section {
+    background-color: #f7f7f7;
+    padding: 30px 40px;
+    margin: 30px auto;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    font-family: Arial, sans-serif;
+}
+
+.actors-section h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.actors-section ul {
+    list-style-type: none;
+    padding-left: 0;
+    text-align: center;
+}
+
+.actors-section li {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.actors-section select {
+    padding: 5px 10px;
+    margin-top: 5px;
+}

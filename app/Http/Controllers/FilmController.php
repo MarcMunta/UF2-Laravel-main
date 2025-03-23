@@ -169,6 +169,30 @@ class FilmController extends Controller
 
     public function createFilm(Request $request)
     {
+        $source = $request->input('source', 'sql');
+
+        if ($source === 'json') {
+            $jsonPath = storage_path('app/public/films.json');
+            $films = [];
+
+            if (file_exists($jsonPath)) {
+                $content = file_get_contents($jsonPath);
+                $films = json_decode($content, true) ?? [];
+            }
+
+            $newFilm = [
+                'title' => $request->input('title'),
+                'genre' => $request->input('genre'),
+                'year' => $request->input('year'),
+            ];
+
+            $films[] = $newFilm;
+            file_put_contents($jsonPath, json_encode($films, JSON_PRETTY_PRINT));
+
+            return response()->json(['message' => 'Film saved to JSON.']);
+        }
+
+
         $title = "Crear Film";
         $films = FilmController::readFilms();
         $name = $request->input("name");

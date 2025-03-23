@@ -46,3 +46,8 @@ Route::middleware('url')->group(function () {
     });
 });
 
+    Route::group(['prefix' => 'actorout'], function () {
+        Route::get('listactors/', [App\Http\Controllers\actorController::class, "listactors"])->name('listactors');
+        Route::get('contactors/', [App\Http\Controllers\actorController::class, "contactors"])->name('contactors');
+        Route::get('listByDecade/{year?}', [App\Http\Controllers\actorController::class, "listByDecade"])->name('listByDecade');
+    });
