@@ -12,10 +12,9 @@ return new class extends Migration {
             $table->string('title', 100);
             $table->year('year');
             $table->string('genre', 50);
-            $table->string('country', 30);
+            $table->string('country', 50);
             $table->integer('duration');
             $table->string('img_url', 255)->nullable();
-            $table->timestamps();
         });
     }
 
