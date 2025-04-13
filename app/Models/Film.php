@@ -14,4 +14,9 @@ class Film extends Model
         'year',
         'county',
     ];
+
+    public function Actors()
+    {
+        return $this->belongsToMany(Actor::class);
+    }
 }
