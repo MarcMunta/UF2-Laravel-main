@@ -32,5 +32,16 @@ class ActorController extends Controller{
         $$result = Actor::destroy($id);
         return response()->json(['action' => 'delete', 'status' => $result == 0 ? "False" : "True"]);
     }
+
+    public function index()
+    {
+        $actors = Actor::all();
+        $ActorsWhidFilms = $actors->map(function ($actor) {
+            $actor->film = $actor->Films()->get();
+            return $actor;
+        });
+
+        return response()->json($ActorsWhidFilms, 200, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
 }
 ?>

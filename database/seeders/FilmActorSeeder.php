@@ -13,7 +13,7 @@ class FilmActorSeeder extends Seeder {
         $actors = Actor::pluck('id')->toArray(); 
 
         for ($i = 0; $i < 10; $i++) {
-            DB::table('films_actors')->insert([
+            DB::table('actor_film')->insert([
                 'film_id' => $films[array_rand($films)], 
                 'actor_id' => $actors[array_rand($actors)],
                 'created_at' => now(),

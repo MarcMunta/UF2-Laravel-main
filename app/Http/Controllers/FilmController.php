@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Film;
+use App\Models\Actor;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,17 +14,15 @@ class FilmController extends Controller
     /**
      * Read films from storage
      */
-    public static function readFilms(): array
-    {
-        $sqlFilms = DB::table('films')->get()->map(function ($film) {
+    public static function readFilms(): array {
+        $films = Storage::json('/public/films.json');
+        $filmsBBDD = Film::all()->toArray();
+
+        $arraybbdd= array_map(function($film){
             return (array) $film;
-        })->toArray();
-
-        $jsonFilms = Storage::exists('public/films.json')
-            ? Storage::json('public/films.json')
-            : [];
-
-        return array_merge($sqlFilms, $jsonFilms);
+        }, $filmsBBDD);
+        $filmsJuntas = array_merge($films, $arraybbdd);
+        return $filmsJuntas;
     }
     /**
      * List films older than input year 
@@ -175,54 +175,49 @@ class FilmController extends Controller
     }
 
 
-    public function createFilm(Request $request)
-    {
-        if (env("tipo") === 'json') {
-            $jsonPath = storage_path('app/public/films.json');
-            $films = [];
-
-            if (file_exists($jsonPath)) {
-                $content = file_get_contents($jsonPath);
-                $films = json_decode($content, true) ?? [];
-            }
-
-            $newFilm = [
-                'title' => $request->input('title'),
-                'genre' => $request->input('genre'),
-                'year' => $request->input('year'),
-            ];
-
-            $films[] = $newFilm;
-            file_put_contents($jsonPath, json_encode($films, JSON_PRETTY_PRINT));
-
-            return response()->json(['message' => 'Film saved to JSON.']);
-        }
-
-
-        $title = "Crear Film";
-        $films = FilmController::readFilms();
-        $name = $request->input("name");
-        $year = $request->input("year");
-        $genre = $request->input("genre");
-        $country = $request->input("country");
-        $duration = $request->input("duration");
-        $url = $request->input("image_url");
-        if ($this->isFilm($name)) {
-            return redirect('/')->withErrors(['errors' => 'El nombre esta repetido']);
-        }
+    public function createFilm(Request $request){
+        $title = "Creaccion de pelicula";
+        $filmName = $request->input('name');
+        $year = $request->input('year');
+        $genre = $request->input('genre');
+        $contry = $request->input('country');
+        $duration = $request->input('duration');
+        $imageURL = $request->input('image_url');
         $film = [
-            "name" => $name,
-            "year" => $year,
-            "genre" => $genre,
-            "country" => $country,
-            "duration" => $duration,
-            "img_url" => $url
+            'name' => $filmName,
+            'year' => $year,
+            'genre' => $genre,
+            'country' => $contry,
+            'duration' => $duration,
+            'img_url' => $imageURL,
         ];
-        $films[] = $film;
-
-        Storage::put('/public/films.json', json_encode($films, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
 
 
-        return view("films.list", ["films" => $films, "title" => $title]);
+        if(env('TIPO') == "json"){
+            if (($this->isFilm($filmName))) {
+                return redirect('/')->withErrors(['error' => 'El nombre de la película ya existe.']);
+            }
+            $jsonString = file_get_contents('../storage/app/public/films.json');
+            $films = json_decode($jsonString,true);
+            array_push($films,$film);
+            $json = json_encode($films, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            file_put_contents('../storage/app/public/films.json',$json);
+        }else{
+            Film::create($film);
+        }
+
+        $film = FilmController::readFilms();
+        return view('films.list', ['films' => $film, 'title' => $title]);
+    }
+
+    public function index()
+    {
+        $films = Film::all();
+        $filmsWithActors = $films->map(function ($film) {
+            $film->actors = $film->Actors()->get();
+            return $film;
+        });
+
+        return response()->json($filmsWithActors, 200, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 }
