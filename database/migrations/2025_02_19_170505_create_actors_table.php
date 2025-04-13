@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->string('name', 30);
             $table->string('surname', 30);
             $table->date('birthdate');
-            $table->string('country', 30);
+            $table->string('country', 50);
             $table->string('img_url', 255)->nullable();
             $table->timestamps();
         });

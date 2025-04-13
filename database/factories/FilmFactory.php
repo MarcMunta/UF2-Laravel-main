@@ -21,10 +21,10 @@ class FilmFactory extends Factory
     {
         $faker = Faker::create();
         return [
-            'name' => $faker->name(),
+            'title' => $faker->name(),
             'year' => $faker->year(),
             'genre' => $faker->randomElement(["Terror", "Comedia", "Accion", "Suspense", "Ciencia Ficcion", "Romance"]),
-            'country' => $faker->country(),
+            'country' => substr($this->faker->country, 0, 50),
             'duration' => $faker->numberBetween(90, 180),
             'img_url' => $faker->imageUrl(400, 600, 'movies'),
         ];
