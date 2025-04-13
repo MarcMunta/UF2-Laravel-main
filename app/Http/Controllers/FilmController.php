@@ -144,7 +144,7 @@ class FilmController extends Controller
                 $films_filtered[] = $film;
             }
         }
-        return view("films.list", ["films" => $films, "title" => $title]);
+        return view('films.list', ["films" => $films, "title" => $title]);
     }
 
 
