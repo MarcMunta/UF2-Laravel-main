@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::delete('delete/{id}', [ActorController::class, 'destroy'])->name('deleteActor');
+Route::delete('delete/{id}', [ActorController::class, 'destroy'])->name('delete');
 
 Route::get('/actor', [ActorController::class, 'index']);
 Route::get('/film', [FilmController::class, 'index']);
