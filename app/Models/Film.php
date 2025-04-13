@@ -10,7 +10,7 @@ class Film extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'title',
         'year',
         'genre',
         'country',
@@ -20,7 +20,7 @@ class Film extends Model
         'updated_at',
     ];
     protected $casts = [
-        'name' => 'string',
+        'title' => 'string',
         'year' => 'integer',
         'genre' => 'string',
         'country' => 'string',
