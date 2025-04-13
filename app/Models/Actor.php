@@ -12,6 +12,8 @@ class Actor extends Model
         'birthdate',
         'country',
         'img_url',
+        'created_at',
+        'updated_at',
     ];
     protected $casts = [
         'name' => 'string',
@@ -19,6 +21,8 @@ class Actor extends Model
         'birthdate' => 'date',
         'country' => 'string',
         'img_url' => 'string',
+        'created_at' => 'datetime',
+        'updated_at'  => 'datetime',
     ];
 
 

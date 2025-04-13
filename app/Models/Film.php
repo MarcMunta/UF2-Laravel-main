@@ -16,6 +16,8 @@ class Film extends Model
         'country',
         'duration',
         'img_url',
+        'created_at',
+        'updated_at',
     ];
     protected $casts = [
         'name' => 'string',
@@ -24,8 +26,9 @@ class Film extends Model
         'country' => 'string',
         'duration' => 'integer',
         'img_url' => 'string',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
-}
 
     public function Actors()
     {
