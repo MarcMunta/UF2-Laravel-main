@@ -16,7 +16,7 @@ Route::put('/films/{id}', [FilmController::class, 'update']);
 Route::delete('/films/{id}', [FilmController::class, 'destroy']);      
 
 Route::get('/actors', [ActorController::class, 'index']);              
-Route::get('/actors/{id}', [ActorController::class, 'show']);         
-Route::post('/actors', [ActorController::class, 'create']);            
-Route::put('/actors/{id}', [ActorController::class, 'update']);       
+Route::get('/actors/{id}', [ActorController::class, 'show']);          
+Route::post('/actors', [ActorController::class, 'create']);           
+Route::put('/actors/{id}', [ActorController::class, 'update']);        
 Route::delete('/actors/{id}', [ActorController::class, 'destroy']);    
