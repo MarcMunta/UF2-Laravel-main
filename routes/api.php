@@ -1,26 +1,22 @@
 <?php
 
-use App\Http\Controllers\ActorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmController;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+use App\Http\Controllers\ActorController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::delete('delete/{id}', [ActorController::class, 'destroy'])->name('delete');
+Route::get('/films', [FilmController::class, 'listFilmsWithActors']);  
+Route::get('/films/{id}', [FilmController::class, 'isFilm']);          
+Route::post('/films', [FilmController::class, 'createFilm']);          
+Route::put('/films/{id}', [FilmController::class, 'update']);          
+Route::delete('/films/{id}', [FilmController::class, 'destroy']);      
 
-Route::get('/actor', [ActorController::class, 'index']);
-Route::get('/film', [FilmController::class, 'index']);
+Route::get('/actors', [ActorController::class, 'index']);              
+Route::get('/actors/{id}', [ActorController::class, 'show']);         
+Route::post('/actors', [ActorController::class, 'create']);            
+Route::put('/actors/{id}', [ActorController::class, 'update']);       
+Route::delete('/actors/{id}', [ActorController::class, 'destroy']);    
