@@ -39,24 +39,27 @@ class ActorController extends Controller
 
     public function index()
     {
-        $actors = Actor::all();
-        $ActorsWhidFilms = $actors->map(function ($actor) {
-            $actor->film = $actor->Films()->get();
-            return $actor;
-        });
+        $actors = Actor::with('films')->get();
 
-        return response()->json($ActorsWhidFilms, 200, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        return response()->json($actors, 200, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
+
 
     public function update(Request $request, $id)
     {
         $actor = Actor::findOrFail($id);
 
-        $actor->update([
-            'name' => $request->input('name'),
-            'birthdate' => $request->input('birthdate'),
-            'nationality' => $request->input('nationality'),
-        ]);
+        if ($request->has('name')) {
+            $actor->name = $request->input('name');
+        }
+        if ($request->has('birthdate')) {
+            $actor->birthdate = $request->input('birthdate');
+        }
+        if ($request->has('country')) {
+            $actor->country = $request->input('country');
+        }
+
+        $actor->save();
 
         return response()->json([
             'message' => 'Actor actualizado correctamente',
