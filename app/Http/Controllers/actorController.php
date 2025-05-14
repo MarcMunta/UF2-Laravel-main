@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Actor;
 use Illuminate\Http\Request;
-class ActorController extends Controller{
 
-    public function listactors(){
+class ActorController extends Controller
+{
+
+    public function listactors()
+    {
         $title = "Todos los actores";
         $actors = Actor::all();
 
         return view('actors.list', ["actors" => $actors, "title" => $title]);
     }
-    public function contactors(){
+    public function contactors()
+    {
         $title = "Contador de todos los actores";
         $actors = Actor::count();
 
@@ -27,7 +31,8 @@ class ActorController extends Controller{
         return view("actors.list", ["actors" => $actors, "title" => "Lista de Actores por Decada" . $years[0] . " " . $years[1]]);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $result = Actor::destroy($id);
         return response()->json(['action' => 'delete', 'status' => $result == 0 ? "False" : "True"]);
     }
@@ -42,5 +47,20 @@ class ActorController extends Controller{
 
         return response()->json($ActorsWhidFilms, 200, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
+
+    public function update(Request $request, $id)
+    {
+        $actor = Actor::findOrFail($id);
+
+        $actor->update([
+            'name' => $request->input('name'),
+            'birthdate' => $request->input('birthdate'),
+            'nationality' => $request->input('nationality'),
+        ]);
+
+        return response()->json([
+            'message' => 'Actor actualizado correctamente',
+            'actor' => $actor
+        ]);
+    }
 }
-?>
