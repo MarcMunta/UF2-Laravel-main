@@ -33,7 +33,6 @@ class FilmController extends Controller
         $films = FilmController::readFilms();
 
         foreach ($films as $film) {
-            //foreach ($this->datasource as $film) {
             if ($film['year'] < $year)
                 $old_films[] = $film;
         }
@@ -191,7 +190,6 @@ class FilmController extends Controller
     {
         $film = Film::findOrFail($id);
 
-        // Actualizamos los campos si están presentes
         if ($request->has('title')) $film->title = $request->input('title');
         if ($request->has('year')) $film->year = $request->input('year');
         if ($request->has('genre')) $film->genre = $request->input('genre');
