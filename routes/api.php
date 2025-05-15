@@ -11,7 +11,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/films', [FilmController::class, 'listFilmsWithActors']);  
 Route::get('/films/{id}', [FilmController::class, 'isFilm']);          
-Route::post('/films', [FilmController::class, 'createFilm']);          
+Route::post('/films', [FilmController::class, 'createFilm']);         
 Route::put('/films/{id}', [FilmController::class, 'update']);          
 Route::delete('/films/{id}', [FilmController::class, 'destroy']);      
 
