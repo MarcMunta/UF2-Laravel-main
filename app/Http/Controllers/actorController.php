@@ -39,13 +39,9 @@ class ActorController extends Controller
 
     public function index()
     {
-        $actors = Actor::all();
-        $ActorsWhidFilms = $actors->map(function ($actor) {
-            $actor->film = $actor->Films()->get();
-            return $actor;
-        });
+        $actors = Actor::with('films')->get();
 
-        return response()->json($ActorsWhidFilms, 200, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        return response()->json($actors, 200, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     public function show($id)
