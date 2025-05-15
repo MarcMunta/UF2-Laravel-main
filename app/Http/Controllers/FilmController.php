@@ -33,7 +33,6 @@ class FilmController extends Controller
         $films = FilmController::readFilms();
 
         foreach ($films as $film) {
-            //foreach ($this->datasource as $film) {
             if ($film['year'] < $year)
                 $old_films[] = $film;
         }
@@ -146,52 +145,27 @@ class FilmController extends Controller
         ]);
     }
 
-    public function isFilm($name)
+    public function isFilm($id)
     {
-        $films = FilmController::readFilms();
-        foreach ($films as $film) {
-            if ($film['name'] == $name) {
-                return true;
-            }
-        }
-        return false;
+        $film = Film::with('actors')->findOrFail($id);
+        return response()->json($film, 200, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
-
 
     public function createFilm(Request $request)
     {
-        $title = "Creaccion de pelicula";
-        $filmName = $request->input('name');
-        $year = $request->input('year');
-        $genre = $request->input('genre');
-        $contry = $request->input('country');
-        $duration = $request->input('duration');
-        $imageURL = $request->input('image_url');
-        $film = [
-            'name' => $filmName,
-            'year' => $year,
-            'genre' => $genre,
-            'country' => $contry,
-            'duration' => $duration,
-            'img_url' => $imageURL,
-        ];
+        $film = Film::create([
+            'title' => $request->input('title'),
+            'year' => $request->input('year'),
+            'genre' => $request->input('genre'),
+            'country' => $request->input('country'),
+            'duration' => $request->input('duration'),
+            'img_url' => $request->input('img_url'),
+        ]);
 
-
-        if (env('TIPO') == "json") {
-            if (($this->isFilm($filmName))) {
-                return redirect('/')->withErrors(['error' => 'El nombre de la película ya existe.']);
-            }
-            $jsonString = file_get_contents('../storage/app/public/films.json');
-            $films = json_decode($jsonString, true);
-            array_push($films, $film);
-            $json = json_encode($films, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-            file_put_contents('../storage/app/public/films.json', $json);
-        } else {
-            Film::create($film);
-        }
-
-        $film = FilmController::readFilms();
-        return view('films.list', ['films' => $film, 'title' => $title]);
+        return response()->json([
+            'message' => 'Película creada correctamente',
+            'film' => $film
+        ], 201);
     }
 
     public function index()
@@ -210,5 +184,35 @@ class FilmController extends Controller
         $films = Film::with('actors')->get();
 
         return response()->json($films, 200, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $film = Film::findOrFail($id);
+
+        if ($request->has('title')) $film->title = $request->input('title');
+        if ($request->has('year')) $film->year = $request->input('year');
+        if ($request->has('genre')) $film->genre = $request->input('genre');
+        if ($request->has('country')) $film->country = $request->input('country');
+        if ($request->has('duration')) $film->duration = $request->input('duration');
+        if ($request->has('img_url')) $film->img_url = $request->input('img_url');
+
+        $film->save();
+
+        return response()->json([
+            'message' => 'Película actualizada correctamente',
+            'film' => $film
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $film = Film::findOrFail($id);
+        $film->delete();
+
+        return response()->json([
+            'message' => 'Película eliminada correctamente',
+            'film_id' => $id
+        ]);
     }
 }
